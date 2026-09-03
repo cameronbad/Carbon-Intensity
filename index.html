@@ -16,7 +16,7 @@
         myDisplayer(await response.text(), ID);
     }
     function myDisplayer(text, ID) {
-        const values = (JSON.parse(text)).data[0];
+        const values = (JSON.parse(text)).data.data[0];
         let time = (values.from).slice(11,16);
         document.getElementById(ID).innerHTML = time + "(UTC+0): " + values.intensity.actual +"("
         + values.intensity.forecast +")" + " - " + values.intensity.index;

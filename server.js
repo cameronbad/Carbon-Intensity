@@ -21,7 +21,7 @@ app.get("/api/carbon-intensity", async (req, res) => {
         const data = await response.json();
 
         // Save data to Supabase
-        await supabase.from("carbon_intensity").upsert({id: 1, data: data});
+        await supabase.from("cached-data").upsert({id: 1, data: data, created_at: new Date().toISOString()});
 
         res.json({
             data: data,
@@ -46,28 +46,6 @@ app.get("/api/carbon-intensity", async (req, res) => {
         });
     }
 });
-
-app.get("/api/test-supabase", async (req, res) => {
-    const { data, error } = await supabase
-        .from("cached-data")
-        .select("*")
-        .limit(1);
-
-    if (error) {
-        console.error("Supabase error:", error);
-
-        return res.status(500).json({
-            success: false,
-            error: error.message
-        });
-    }
-
-    res.json({
-        success: true,
-        data: data
-    });
-});
-
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
