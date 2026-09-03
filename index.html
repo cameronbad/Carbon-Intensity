@@ -21,7 +21,7 @@
         document.getElementById(ID).innerHTML = time + "(UTC+0): " + values.intensity.actual +"("
         + values.intensity.forecast +")" + " - " + values.intensity.index;
     }
-    loadIntensity("https://api.carbonintensity.org.uk/intensity", "intensity"); 
+    loadIntensity("/api/carbon-intensity", "intensity"); 
     //Get 24h ahead instead of just right now, add that to a file which gets updated/read on page load,
     //this way if the connection drops can use the predicted in there as backups
     
