@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="example">time: actual(predicted) - index</div>
+    <div id="intensity"></div>
+</body>
+</html>
+<script>
+    async function loadIntensity(file, ID) {
+        const response = await fetch(file);
+        myDisplayer(await response.text(), ID);
+    }
+    function myDisplayer(text, ID) {
+        const values = (JSON.parse(text)).data[0];
+        let time = (values.from).slice(11,16);
+        document.getElementById(ID).innerHTML = time + "(UTC+0): " + values.intensity.actual +"("
+        + values.intensity.forecast +")" + " - " + values.intensity.index;
+    }
+    loadIntensity("https://api.carbonintensity.org.uk/intensity", "intensity"); 
+    //Get 24h ahead instead of just right now, add that to a file which gets updated/read on page load,
+    //this way if the connection drops can use the predicted in there as backups
+    
+</script>
