@@ -8,6 +8,7 @@
 <body>
     <div class="example">time: actual(predicted) - index</div>
     <div id="intensity"></div>
+    <div id="intensity_status"></div>
 </body>
 </html>
 <script>
@@ -16,13 +17,14 @@
         myDisplayer(await response.text(), ID);
     }
     function myDisplayer(text, ID) {
-        const values = (JSON.parse(text)).data.data[0];
+        const data = JSON.parse(text);
+        
+        const values = data.data;
         let time = (values.from).slice(11,16);
         document.getElementById(ID).innerHTML = time + "(UTC+0): " + values.intensity.actual +"("
         + values.intensity.forecast +")" + " - " + values.intensity.index;
+        document.getElementById(ID + "_status").innerHTML = data.status;
     }
     loadIntensity("/api/carbon-intensity", "intensity"); 
-    //Get 24h ahead instead of just right now, add that to a file which gets updated/read on page load,
-    //this way if the connection drops can use the predicted in there as backups
     
 </script>
