@@ -27,6 +27,7 @@ function dataDisplayer(data) {
 
     const index = Math.min(rawIndex, 47); //If the index exceeds the length of the data, set it to the last index
 
+    //Checking status of the data
     const status = (index > 47)
         ? "Out of date data, showing last available data"
         : (data.cached || index > 0) 
@@ -44,7 +45,7 @@ app.get("/api/carbon-intensity", async (req, res) => {
         if (process.env.API_MODE === "fail") {
             throw new Error("API failure intentionally triggered for testing");
         }
-        
+
         // Get time off set by -30 minutes so that inteisty returns an actual value rather than purely predictive values
         const time = moment().subtract(30, 'minutes').format('YYYY-MM-DDTHH:mm:ssZ');
         // Fetch data from the external API
